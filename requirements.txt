@@ -1,0 +1,14 @@
+streamlit>=1.30
+pandas>=2.0
+numpy>=1.24
+requests>=2.31
+matplotlib>=3.7
+
+# Opcional: busca da ETTJ ANBIMA oficial
+# Se falhar no deploy, o app continua funcionando (fallback silencioso).
+pyettj>=0.3
+
+# Opcional: agentes de IA (aba Comitê)
+# Se não instalar, a aba fica desabilitada mas o resto do app funciona.
+anthropic>=0.40
+python-dotenv>=1.0
