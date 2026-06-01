@@ -48,3 +48,7 @@ Thumbs.db
 *.csv
 *.parquet
 .cache/
+
+# Logs / scratch
+*.log
+_shoot.py

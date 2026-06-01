@@ -8,6 +8,22 @@ O app identifica oportunidades por **quartis de taxa** e **z-score**, permite **
 
 ---
 
+## 🖼️ Telas
+
+| Scanner | Oportunidades | Backtest |
+|---|---|---|
+| ![Scanner](assets/screenshots/01_scanner.png) | ![Oportunidades](assets/screenshots/02_oportunidades.png) | ![Backtest](assets/screenshots/03_backtest.png) |
+
+| Risco (Duration) | Curvas & Inflação | Cenários (R$) |
+|---|---|---|
+| ![Risco](assets/screenshots/04_risco.png) | ![Curvas & Inflação](assets/screenshots/05_curvas.png) | ![Cenários](assets/screenshots/06_cenarios.png) |
+
+| Fat Tails (Taleb) | Comitê (IA) | Guia |
+|---|---|---|
+| ![Fat Tails](assets/screenshots/07_fattails.png) | ![Comitê](assets/screenshots/08_comite.png) | ![Guia](assets/screenshots/09_guia.png) |
+
+---
+
 ## ✨ Funcionalidades
 
 ### 🏆 Aba 1 — Scanner
