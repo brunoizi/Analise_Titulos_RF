@@ -1284,7 +1284,7 @@ with tab5:
 
             comp_df = pd.DataFrame(
                 [
-                    {"métrica": k, "valor": v}
+                    {"métrica": k, "valor": str(v)}
                     for k, v in comp.items()
                 ]
             )
