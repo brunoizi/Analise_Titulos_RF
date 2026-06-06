@@ -254,7 +254,7 @@ with tab1:
     if use_fat_filter and "iFat_atual" in sinais.columns:
         cols = cols + ["iFat_atual", "em_zona_entrada"]
 
-    st.dataframe(sinais[cols], use_container_width=True, hide_index=True)
+    st.dataframe(sinais[cols], width="stretch", hide_index=True)
     download_btn(sinais[cols], "scanner_ranking.csv")
 
     st.subheader("📊 Top 25 por score")
@@ -427,7 +427,7 @@ with tab_opp:
             "veredito",
             "recomendacao",
         ]
-        st.dataframe(view[cols_show], use_container_width=True, hide_index=True)
+        st.dataframe(view[cols_show], width="stretch", hide_index=True)
         download_btn(view, "oportunidades.csv")
 
         # ---- Destaque: títulos em zona de entrada ATIVA ----
@@ -551,7 +551,7 @@ with tab2:
 
     events = bt["events"]
     st.write("Eventos (datas em que o sinal disparou):")
-    st.dataframe(events.head(200), use_container_width=True, hide_index=True)
+    st.dataframe(events.head(200), width="stretch", hide_index=True)
     download_btn(events, f"backtest_events_{titulo_sel.replace(' ','_')}.csv")
 
     series = bt["series"].copy()
@@ -656,7 +656,7 @@ with tab3:
                 "Permite ler de imediato o ganho/perda em reais para cada cenário de taxa."
             )
             sens = pu_sensitivity_table(pu_r, taxa_r, years_r, titulo_r)
-            st.dataframe(sens, use_container_width=True, hide_index=True)
+            st.dataframe(sens, width="stretch", hide_index=True)
             download_btn(
                 sens, f"sensibilidade_{titulo_r.replace(' ','_')}.csv"
             )
@@ -714,7 +714,7 @@ with tab3:
                 )
 
             comp_df = pd.DataFrame(rows).sort_values("mod_duration", ascending=False)
-            st.dataframe(comp_df, use_container_width=True, hide_index=True)
+            st.dataframe(comp_df, width="stretch", hide_index=True)
             download_btn(comp_df, "risco_comparativo.csv")
 
             if not comp_df.empty:
@@ -791,13 +791,13 @@ with tab4:
     with col_c1:
         st.markdown("**Curva prefixada**")
         if not curve_pre.empty:
-            st.dataframe(curve_pre, use_container_width=True, hide_index=True)
+            st.dataframe(curve_pre, width="stretch", hide_index=True)
         else:
             st.caption("(sem dados)")
     with col_c2:
         st.markdown("**Curva IPCA+ (taxa real)**")
         if not curve_ipca.empty:
-            st.dataframe(curve_ipca, use_container_width=True, hide_index=True)
+            st.dataframe(curve_ipca, width="stretch", hide_index=True)
         else:
             st.caption("(sem dados)")
 
@@ -815,7 +815,7 @@ with tab4:
     )
     inf_df = implied_inflation(df, ref_date=ref_date, tol_years=tol)
     if not inf_df.empty:
-        st.dataframe(inf_df, use_container_width=True, hide_index=True)
+        st.dataframe(inf_df, width="stretch", hide_index=True)
         download_btn(inf_df, "inflacao_implicita.csv")
 
         fig, ax = plt.subplots(figsize=(12, 5))
@@ -849,14 +849,14 @@ with tab4:
                 st.markdown("**Pré**")
                 res_pre = fetch_anbima_ettj("PRE")
                 if res_pre is not None:
-                    st.dataframe(res_pre.head(30), use_container_width=True)
+                    st.dataframe(res_pre.head(30), width="stretch")
                 else:
                     st.warning("Indisponível (biblioteca/rede/parsing).")
             with col_an2:
                 st.markdown("**IPCA**")
                 res_ipca = fetch_anbima_ettj("IPCA")
                 if res_ipca is not None:
-                    st.dataframe(res_ipca.head(30), use_container_width=True)
+                    st.dataframe(res_ipca.head(30), width="stretch")
                 else:
                     st.warning("Indisponível (biblioteca/rede/parsing).")
 
@@ -984,7 +984,7 @@ with tab5:
                 },
             ]
         )
-        st.dataframe(res, use_container_width=True, hide_index=True)
+        st.dataframe(res, width="stretch", hide_index=True)
         download_btn(res, "cenarios_mtm.csv")
 
         st.markdown("#### Calibração PU ~ Taxa")
@@ -1151,7 +1151,7 @@ with tab5:
                 },
             ]
         )
-        st.dataframe(res_carry, use_container_width=True, hide_index=True)
+        st.dataframe(res_carry, width="stretch", hide_index=True)
         download_btn(res_carry, "carrego_resumo.csv")
 
         if apply_ir and "aliquota_ir" in df_c_base.columns:
@@ -1284,12 +1284,17 @@ with tab5:
 
             comp_df = pd.DataFrame(
                 [
-                    {"métrica": k, "valor": v}
+                    {
+                        "métrica": k,
+                        # valor mistura floats (R$) e strings (titulo/vantagem);
+                        # uniformiza para texto p/ não quebrar a serialização Arrow.
+                        "valor": f"{v:,.2f}" if isinstance(v, (int, float)) else str(v),
+                    }
                     for k, v in comp.items()
                 ]
             )
             with st.expander("Detalhes do cálculo"):
-                st.dataframe(comp_df, use_container_width=True, hide_index=True)
+                st.dataframe(comp_df, width="stretch", hide_index=True)
                 download_btn(comp_df, "carrego_vs_venda.csv")
 
             st.caption(
@@ -1613,7 +1618,7 @@ with tab6:
                         )
                     bt_table = pd.DataFrame(rows)
                     st.dataframe(
-                        bt_table, use_container_width=True, hide_index=True
+                        bt_table, width="stretch", hide_index=True
                     )
                     download_btn(bt_table, f"fat_tail_bt_{titulo_ft.replace(' ','_')}.csv")
 
@@ -1786,7 +1791,7 @@ with tab6:
                     {"faixa": f"iFat < {thr_4:.2f}", "posição": f"{pos_4}%", "interpretação": "pânico → posição cheia"},
                 ]
             )
-            st.dataframe(niveis_df, use_container_width=True, hide_index=True)
+            st.dataframe(niveis_df, width="stretch", hide_index=True)
 
             # ---------- Estado atual ----------
             capital_total = st.number_input(
@@ -2015,7 +2020,7 @@ with tab6:
                     )
             if ret_rows:
                 ret_table = pd.DataFrame(ret_rows)
-                st.dataframe(ret_table, use_container_width=True, hide_index=True)
+                st.dataframe(ret_table, width="stretch", hide_index=True)
                 download_btn(
                     ret_table,
                     f"fat_tail_sizing_bt_{titulo_ft.replace(' ','_')}.csv",
@@ -2038,7 +2043,7 @@ with tab6:
                         columns=["posicao_target", "posicao_change"]
                     )
                     st.dataframe(
-                        trades_show, use_container_width=True, hide_index=True
+                        trades_show, width="stretch", hide_index=True
                     )
                     download_btn(
                         trades_show,
