@@ -1284,7 +1284,7 @@ with tab5:
 
             comp_df = pd.DataFrame(
                 [
-                    {"métrica": k, "valor": str(v)}
+                    {"métrica": k, "valor": v}
                     for k, v in comp.items()
                 ]
             )
@@ -2359,7 +2359,7 @@ with tab7:
     with st.expander("🧾 O que é PU e qual versão escolher?"):
         st.markdown(
             r"""
-            **PU = Preço Unitário**, ou seja, **quanto custa uma unidade do título em R$** naquele momento.
+            **PU = Preço Unitário**, ou seja, **quanto custa uma unidade do título em R\$** naquele momento.
 
             A relação matemática com a taxa é direta: **PU alto ⇔ taxa baixa** (e vice-versa).
             Para IPCA+/prefixado sem cupom:
@@ -2368,7 +2368,7 @@ with tab7:
             PU = \frac{VNA}{(1 + \text{taxa})^{\text{anos até vencimento}}}
             $$
 
-            onde VNA é o Valor Nominal Atualizado (R$ 1.000 no caso do Prefixado, ou
+            onde VNA é o Valor Nominal Atualizado (R\$ 1.000 no caso do Prefixado, ou
             1.000 × fator IPCA para IPCA+).
 
             **As 3 versões disponíveis no CSV:**
@@ -2508,7 +2508,7 @@ with tab7:
             | **Duration (Macaulay)** | Tempo médio ponderado para receber o fluxo do título (em anos) | Zero-cupom: = prazo até o vencimento. Com cupom: menor que o prazo. |
             | **Modified Duration** | % que o PU muda se a taxa mudar 1% | MD = 5 → taxa +1% faz o PU cair ~5% |
             | **Convexidade** | Correção não-linear da Duration | Quanto maior, mais o PU sobe em queda de taxa e menos cai em alta |
-            | **DV01** | Quanto o PU muda (em R$) a cada +0,01% (1 bp) na taxa | Posição de R$ 100 mil com DV01 = R$ 50 → perde R$ 50 por 1 bp de alta |
+            | **DV01** | Quanto o PU muda (em R\$) a cada +0,01% (1 bp) na taxa | Posição de R\$ 100 mil com DV01 = R\$ 50 → perde R\$ 50 por 1 bp de alta |
 
             **Aproximação de 2ª ordem (a tabela de sensibilidade usa isso):**
             $$
@@ -2524,7 +2524,7 @@ with tab7:
             **Modo comparativo (scatter):**
             - Eixo X: prazo até vencimento
             - Eixo Y: Modified Duration
-            - **Tamanho da bolha**: DV01 (quanto maior, mais risco em R$)
+            - **Tamanho da bolha**: DV01 (quanto maior, mais risco em R\$)
             - Use para comparar rapidamente risco relativo entre vencimentos da mesma família.
 
             **💡 Regras rápidas:**
@@ -2565,9 +2565,9 @@ with tab7:
             """
         )
 
-    with st.expander("📈 Aba 5 — Cenários (R$)"):
+    with st.expander(r"📈 Aba 5 — Cenários (R\$)"):
         st.markdown(
-            """
+            r"""
             **3 sub-abas**, cada uma responde uma pergunta diferente:
 
             **1. PU futuro (MtM):** "e se a taxa for X% em um ano, quanto meu PU vale?"
@@ -2577,10 +2577,10 @@ with tab7:
             - ⚠️ **Regressão linear é uma aproximação.** Para choques grandes (± 2%), a relação real é **convexa** (veja aba 3 sobre Convexidade). A regressão **subestima ganhos em quedas de taxa** e superestima perdas em altas.
 
             **2. Carrego até o vencimento (IPCA+):**
-            - Simula: "compro R$ X, carrego até vencer, quanto tenho?"
+            - Simula: "compro R\$ X, carrego até vencer, quanto tenho?"
             - Assume: PU evolui por `(1+real)^t × (1+IPCA)^t`.
             - Aplica **custódia** (B3, 0,20% a.a.) e **IR regressivo** (15-22,5%).
-            - **DCA (aportes periódicos):** se você vai aportar R$ 500/mês, insira esse valor. O gráfico mostra separadamente o que **você aportou** (linha pontilhada) e o **valor total com rendimentos** (linhas coloridas).
+            - **DCA (aportes periódicos):** se você vai aportar R\$ 500/mês, insira esse valor. O gráfico mostra separadamente o que **você aportou** (linha pontilhada) e o **valor total com rendimentos** (linhas coloridas).
             - 3 cenários de IPCA (baixo/base/alto) para ver range de resultados.
 
             **3. Carrego vs Venda antecipada:**
@@ -2680,13 +2680,13 @@ with tab7:
     # =========================================================
     with st.expander("📖 Termos usados no app (do A ao Z)"):
         st.markdown(
-            """
+            r"""
             | Termo | Definição |
             |---|---|
             | **bp (basis point)** | 1 centésimo de 1%. 100 bps = 1%. |
             | **Convexidade** | Mede a curvatura da relação PU×taxa. Títulos longos têm mais. |
             | **Cupom** | Pagamento periódico de juros (semestral em NTN-F e NTN-B c/ Juros Semestrais). |
-            | **DV01** | Variação do PU em R$ para +1 bp na taxa. |
+            | **DV01** | Variação do PU em R\$ para +1 bp na taxa. |
             | **Duration** | Prazo médio ponderado dos fluxos (em anos). |
             | **ETTJ** | Estrutura a Termo da Taxa de Juros (curva de juros). |
             | **Fat Tail** | Cauda gorda; retornos extremos mais frequentes que no gaussiano. |
@@ -2699,11 +2699,11 @@ with tab7:
             | **Modified Duration** | Duration / (1+taxa). % que o PU muda por 1% de taxa. |
             | **NTN-B** | Tesouro IPCA+ (com ou sem Juros Semestrais). |
             | **NTN-F** | Tesouro Prefixado com Juros Semestrais. |
-            | **PU** | Preço Unitário do título em R$. |
+            | **PU** | Preço Unitário do título em R\$. |
             | **Selic** | Taxa básica de juros fixada pelo Copom. Referência do LFT. |
             | **Sharpe** | Retorno médio / desvio-padrão. Mede qualidade do retorno ajustado ao risco. |
             | **STD** | Standard Deviation — desvio-padrão. |
-            | **VNA** | Valor Nominal Atualizado (R$ 1.000 base, corrigido por IPCA se NTN-B). |
+            | **VNA** | Valor Nominal Atualizado (R\$ 1.000 base, corrigido por IPCA se NTN-B). |
             | **Z-score** | (valor − média) / desvio. Mede quantos desvios da média está um ponto. |
             """
         )
